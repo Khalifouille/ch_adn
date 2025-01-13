@@ -34,14 +34,9 @@ Citizen.CreateThread(function()
                         ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour collecter un échantillon d'ADN.")
                         
                         if IsControlJustReleased(0, 38) then
-                            -- Jouer l'animation
                             TaskStartScenarioInPlace(playerPed, "CODE_HUMAN_MEDIC_TEND_TO_DEAD", 0, true)
-                            Citizen.Wait(3000) -- Durée de l'animation (3 secondes)
-
-                            -- Stopper l'animation
+                            Citizen.Wait(3000)
                             ClearPedTasks(playerPed)
-
-                            -- Envoyer l'événement au serveur
                             TriggerServerEvent('dna_collection:NPCMOW', netId)
                             deadNPCs[ped] = nil
                             SetEntityAsNoLongerNeeded(ped)
