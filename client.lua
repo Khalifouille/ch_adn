@@ -51,11 +51,16 @@ end)
 
 RegisterNetEvent('dna_collection:startInteractionAnimation')
 AddEventHandler('dna_collection:startInteractionAnimation', function()
+    print("Animation demandée")
     local playerPed = PlayerPedId()
-    RequestAnimDict("mp_common")
-    while not HasAnimDictLoaded("mp_common") do
-        Citizen.Wait(10)
+    if IsPedInAnyVehicle(playerPed, true) then
+        print("Personnage dans un véhicule")
+    elseif IsPedDeadOrDying(playerPed) then
+        print("Personnage mort ou mourant")
+    else
+        print("Personnage prêt à jouer l'animation")
+        TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, -8.0, 5000, 49, 0, false, false, false)
+        Citizen.Wait(5000)
+        print("Animation terminée")
     end
-
-    TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, -8.0, 5000, 49, 0, false, false, false)
 end)
