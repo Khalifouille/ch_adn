@@ -26,18 +26,17 @@ Citizen.CreateThread(function()
                 local distance = #(playerCoords - npcCoords)
 
                 if distance <= 1.5 then
-                    -- Vérifier si le ped est dans un véhicule
                     if IsPedInAnyVehicle(ped, false) then
-                        ESX.ShowHelpNotification("Vous ne pouvez pas collecter d'échantillon d'ADN d'un NPC dans un véhicule.")
+                        ESX.ShowHelpNotification("OH SORT LE AVANT NN?")
                     else
                         isNearby = true
                         ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour collecter un échantillon d'ADN.")
                         
                         if IsControlJustReleased(0, 38) then
+                            TriggerServerEvent('dna_collection:NPCMOW', netId)
                             TaskStartScenarioInPlace(playerPed, "CODE_HUMAN_MEDIC_TEND_TO_DEAD", 0, true)
                             Citizen.Wait(3000)
                             ClearPedTasks(playerPed)
-                            TriggerServerEvent('dna_collection:NPCMOW', netId)
                             deadNPCs[ped] = nil
                             SetEntityAsNoLongerNeeded(ped)
                             DeleteEntity(ped)

@@ -12,8 +12,10 @@ AddEventHandler('dna_collection:NPCMOW', function(npcNetId)
     local xPlayer = ESX.GetPlayerFromId(source)
     if not xPlayer then return end
 
-    if not exports.ox_inventory:Search(source, 'count', DNA_KIT) then
-        TriggerClientEvent('esx:showNotification', source, "Vous avez besoin d'un kit ADN pour collecter un échantillon.")
+    local kitCount = exports.ox_inventory:Search(source, 'count', DNA_KIT)
+
+    if kitCount <= 0 then
+        TriggerClientEvent('esx:showNotification', source, "Vous avez besoin d'un kit ADN, tu as tous niquer !")
         return
     end
 
@@ -21,7 +23,7 @@ AddEventHandler('dna_collection:NPCMOW', function(npcNetId)
     local success = exports.ox_inventory:AddItem(source, DNA_ITEM, 1, { dna_id = dnaId })
     if success then
         exports.ox_inventory:RemoveItem(source, DNA_KIT, 1)
-        TriggerClientEvent('esx:showNotification', source, "Vous avez collecté un échantillon d'ADN.")
+        TriggerClientEvent('esx:showNotification', source, "Tu as collecter un échantillon d'ADN.")
 
         local query = "INSERT INTO dna_samples (player_id, dna_id, ped_id) VALUES (@playerId, @dnaId, @pedId)"
         exports.oxmysql:execute(query, {
