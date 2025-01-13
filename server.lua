@@ -1,14 +1,14 @@
 ESX = exports['es_extended']:getSharedObject()
 
 local DNA_ITEM = "dna_sample"
-local DNA_KIT = "kit_dna"
+local DNA_KIT = "dna_kit"
 
 local function generateDNAId()
     return "DNA-" .. math.random(100000, 999999)
 end
 
-RegisterNetEvent('dna_collection:collectFromDeadNPC')
-AddEventHandler('dna_collection:collectFromDeadNPC', function(npcNetId)
+RegisterNetEvent('dna_collection:NPCMOW')
+AddEventHandler('dna_collection:NPCMOW', function(npcNetId)
     local xPlayer = ESX.GetPlayerFromId(source)
     if not xPlayer then return end
 

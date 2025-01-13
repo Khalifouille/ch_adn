@@ -30,7 +30,7 @@ Citizen.CreateThread(function()
                     ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour collecter un échantillon d'ADN.")
                     
                     if IsControlJustReleased(0, 38) then
-                        TriggerServerEvent('dna_collection:collectFromDeadNPC', netId)
+                        TriggerServerEvent('dna_collection:NPCMOW', netId)
                         deadNPCs[ped] = nil
                         SetEntityAsNoLongerNeeded(ped)
                         DeleteEntity(ped)
@@ -46,21 +46,5 @@ Citizen.CreateThread(function()
         end
 
         Citizen.Wait(0)
-    end
-end)
-
-RegisterNetEvent('dna_collection:startInteractionAnimation')
-AddEventHandler('dna_collection:startInteractionAnimation', function()
-    print("Animation demandée")
-    local playerPed = PlayerPedId()
-    if IsPedInAnyVehicle(playerPed, true) then
-        print("Personnage dans un véhicule")
-    elseif IsPedDeadOrDying(playerPed) then
-        print("Personnage mort ou mourant")
-    else
-        print("Personnage prêt à jouer l'animation")
-        TaskPlayAnim(playerPed, "mp_common", "givetake1_a", 8.0, -8.0, 5000, 49, 0, false, false, false)
-        Citizen.Wait(5000)
-        print("Animation terminée")
     end
 end)
