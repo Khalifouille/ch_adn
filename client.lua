@@ -25,13 +25,15 @@ Citizen.CreateThread(function()
                 local npcCoords = GetEntityCoords(ped)
                 local distance = #(playerCoords - npcCoords)
 
-                if distance <= 2.0 then
+                if distance <= 1.5 then
                     isNearby = true
                     ESX.ShowHelpNotification("Appuyez sur ~INPUT_CONTEXT~ pour collecter un échantillon d'ADN.")
                     
                     if IsControlJustReleased(0, 38) then
                         TriggerServerEvent('dna_collection:collectFromDeadNPC', netId)
                         deadNPCs[ped] = nil
+                        SetEntityAsNoLongerNeeded(ped)
+                        DeleteEntity(ped)
                     end
                 end
             else
