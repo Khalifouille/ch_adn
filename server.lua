@@ -20,7 +20,8 @@ AddEventHandler('dna_collection:NPCMOW', function(npcNetId)
     end
 
     local dnaId = generateDNAId()
-    local success = exports.ox_inventory:AddItem(source, DNA_ITEM, 1, { dna_id = dnaId })
+    local success = exports.ox_inventory:AddItem(source, DNA_ITEM, 1, { dna_id = dnaId, label = "Échantillon ADN: " .. dnaId })
+
     if success then
         exports.ox_inventory:RemoveItem(source, DNA_KIT, 1)
         TriggerClientEvent('esx:showNotification', source, "Tu as collecter un échantillon d'ADN.")
