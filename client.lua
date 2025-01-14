@@ -1,12 +1,24 @@
 ESX = exports['es_extended']:getSharedObject()
 
 local deadNPCs = {}
+local function isHumanPed(ped)
+    local model = GetEntityModel(ped)
+    return model ~= GetHashKey("a_c_cat_01") and
+           model ~= GetHashKey("a_c_chickenhawk") and
+           model ~= GetHashKey("a_c_husky") and
+           model ~= GetHashKey("a_c_poodle") and
+           model ~= GetHashKey("a_c_rat") and
+           model ~= GetHashKey("a_c_seagull") and
+           model ~= GetHashKey("a_c_shepherd") and
+           model ~= GetHashKey("a_c_cow")
+
+end
 
 Citizen.CreateThread(function()
     while true do
         local pedPool = GetGamePool("CPed")
         for _, ped in ipairs(pedPool) do
-            if not IsPedAPlayer(ped) and IsPedDeadOrDying(ped, true) and not deadNPCs[ped] then
+            if not IsPedAPlayer(ped) and IsPedDeadOrDying(ped, true) and not deadNPCs[ped] and isHumanPed(ped) then
                 deadNPCs[ped] = NetworkGetNetworkIdFromEntity(ped)
             end
         end
