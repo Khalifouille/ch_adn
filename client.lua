@@ -1,17 +1,20 @@
 ESX = exports['es_extended']:getSharedObject()
 
 local deadNPCs = {}
+local animalModels = {
+    ["a_c_cat_01"] = true,
+    ["a_c_chickenhawk"] = true,
+    ["a_c_husky"] = true,
+    ["a_c_poodle"] = true,
+    ["a_c_rat"] = true,
+    ["a_c_seagull"] = true,
+    ["a_c_shepherd"] = true,
+    ["a_c_cow"] = true
+}
+
 local function isHumanPed(ped)
     local model = GetEntityModel(ped)
-    return model ~= GetHashKey("a_c_cat_01") and
-           model ~= GetHashKey("a_c_chickenhawk") and
-           model ~= GetHashKey("a_c_husky") and
-           model ~= GetHashKey("a_c_poodle") and
-           model ~= GetHashKey("a_c_rat") and
-           model ~= GetHashKey("a_c_seagull") and
-           model ~= GetHashKey("a_c_shepherd") and
-           model ~= GetHashKey("a_c_cow")
-
+    return not animalModels[model]
 end
 
 Citizen.CreateThread(function()
